@@ -1,7 +1,7 @@
-CREATE USER qr_it WITH ENCRYPTED PASSWORD 'qr_it';
+CREATE USER cryptoconverter WITH ENCRYPTED PASSWORD '123456';
 
-CREATE DATABASE qr_it WITH
-    OWNER = qr_it
+CREATE DATABASE cryptoconverter WITH
+    OWNER = cryptoconverter
     TEMPLATE = template0
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.UTF-8'

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zen.com Checkout</title>
+</head>
+<body>
+  <h1>Zen.com Checkout</h1>
+
+  <form id="checkoutForm">
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" required>
+
+    <button type="submit">Proceed to Checkout</button>
+  </form>
+
+  <script>
+    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const amount = document.getElementById('amount').value;
+
+      // Make a POST request to initiate the Zen.com checkout
+      fetch('/app/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ amount: amount })
+      })
+      .then(function(response) {
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else {
+          console.error('Error:', response.status);
+          alert('An error occurred while initiating the checkout');
+        }
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+        alert('An error occurred while initiating the checkout');
+      });
+    });
+  </script>
+</body>
+</html>

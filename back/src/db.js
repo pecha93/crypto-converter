@@ -2,7 +2,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'postgres://crypto-converter:123456@localhost:5432/crypto-converter',
+  connectionString: 'postgres://cryptoconverter:123456@localhost:5432/cryptoconverter',
 });
 
 module.exports = pool;

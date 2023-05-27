@@ -15,6 +15,13 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br>
 
+    <label for="apikey">apikey:</label>
+    <input type="text" id="apikey" name="apikey" required><br>
+
+    <label for="apisecret">apisecret:</label>
+    <input type="text" id="apisecret" name="apisecret" required><br>
+
+
     <button type="submit">Sign Up</button>
   </form>
 
@@ -39,17 +46,23 @@
       const emailInput = document.getElementById('email');
       const usernameInput = document.getElementById('username');
       const passwordInput = document.getElementById('password');
+      const apikeyInput = document.getElementById('apikey');
+      const apisecretInput = document.getElementById('apisecret');
+
 
       const email = emailInput.value;
       const username = usernameInput.value;
       const password = passwordInput.value;
+      const apikey = apikeyInput.value;
+      const apisecret = apisecretInput.value;
 
-      const response = await fetch('/signup', {
+
+      const response = await fetch('/app/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, username, password })
+        body: JSON.stringify({ email, username, password, apikey, apisecret})
       });
 
       if (response.ok) {
@@ -74,7 +87,7 @@
       const email = signinEmailInput.value;
       const password = signinPasswordInput.value;
 
-      const response = await fetch('/signin', {
+      const response = await fetch('/app/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

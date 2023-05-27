@@ -1,10 +1,22 @@
+-- Table: public.users
 
-CREATE TABLE crypto-converter.users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  username VARCHAR(255) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  api_key VARCHAR(255) NOT NULL,
-  api_secret VARCHAR(255) NOT NULL,
-  balance DECIMAL(10, 2) NOT NULL
-);
+-- DROP TABLE IF EXISTS public.users;
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    email character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    username character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    api_key character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    api_secret character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    balance numeric(10,2) NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT users_email_key UNIQUE (email),
+    CONSTRAINT users_username_key UNIQUE (username)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.users
+    OWNER to cryptoconverter;
