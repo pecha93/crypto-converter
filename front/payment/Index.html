@@ -1,47 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zen.com Checkout</title>
+  <title>POST Request Example</title>
 </head>
 <body>
-  <h1>Zen.com Checkout</h1>
-
-  <form id="checkoutForm">
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" required>
-
-    <button type="submit">Proceed to Checkout</button>
-  </form>
+  <button onclick="sendPostRequest()">Send POST Request</button>
 
   <script>
-    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+  function sendPostRequest() {
+  fetch('/app/checkout', {
+    method: 'POST'
+  })
+  .then(response => response.json())
+  .then(jsonData => {
+    const requestData = JSON.stringify(jsonData);
 
-      const amount = document.getElementById('amount').value;
-
-      // Make a POST request to initiate the Zen.com checkout
-      fetch('/app/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ amount: amount })
-      })
-      .then(function(response) {
-        if (response.redirected) {
-          window.location.href = response.url;
-        } else {
-          console.error('Error:', response.status);
-          alert('An error occurred while initiating the checkout');
-        }
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-        alert('An error occurred while initiating the checkout');
-      });
+    fetch('https://secure.zen.com/api/checkouts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: requestData
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('POST request sent successfully!');
+        // Handle successful response here
+      } else {
+        console.error('Error sending POST request:', response.status);
+        // Handle error response here
+      }
+    })
+    .catch(error => {
+      console.error('Error sending POST request:', error);
+      // Handle network or other errors here
     });
+  })
+  .catch(error => {
+    console.error('Error retrieving JSON data:', error);
+    // Handle error retrieving JSON data here
+  });
+}
   </script>
 </body>
 </html>
