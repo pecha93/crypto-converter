@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>POST Request Example</title>
+</head>
+<body>
+  <button onclick="sendPostRequest()">Send POST Request</button>
+
+  <script>
+  function sendPostRequest() {
+  fetch('/app/checkout', {
+    method: 'POST'
+  })
+  .then(response => response.json())
+  .then(jsonData => {
+    const requestData = JSON.stringify(jsonData);
+
+    fetch('https://secure.zen.com/api/checkouts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: requestData
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('POST request sent successfully!');
+        // Handle successful response here
+      } else {
+        console.error('Error sending POST request:', response.status);
+        // Handle error response here
+      }
+    })
+    .catch(error => {
+      console.error('Error sending POST request:', error);
+      // Handle network or other errors here
+    });
+  })
+  .catch(error => {
+    console.error('Error retrieving JSON data:', error);
+    // Handle error retrieving JSON data here
+  });
+}
+  </script>
+</body>
+</html>
